@@ -1,9 +1,8 @@
 const UserCard = ({user}) => {
     const {firstName, lastName, photo} = user
+    
     return (
-      
         <div className="card bg-base-300 w-96 shadow-sm py-5">
-            
             <figure>
                 <img
                     src="https://lh3.googleusercontent.com/a/ACg8ocKS9dHOpXpOdjSP8btiYiasBYKWff7GiaoVINOAX_p9yvzG0nE0=s96-c" 
