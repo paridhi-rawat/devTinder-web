@@ -2,7 +2,8 @@ import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addRequests, removeRequest } from "../utils/requestSlice";
-import { useEffect, useState } from "react";
+import { addConnections } from "../utils/connectionSlice";
+import { useEffect } from "react";
 
 const Requests = () => {
   const requests = useSelector((store) => store.request);
@@ -10,12 +11,18 @@ const Requests = () => {
 
   const reviewRequest = async (status, _id) => {
     try {
-      const res = axios.post(
+      await axios.post(
         BASE_URL + "/request/review/" + status + "/" + _id,
         {},
         { withCredentials: true }
       );
       dispatch(removeRequest(_id));
+      if (status === "accepted") {
+        const connRes = await axios.get(BASE_URL + "/user/connections", {
+          withCredentials: true,
+        });
+        dispatch(addConnections(connRes.data.data));
+      }
     } catch (err) {}
   };
 
